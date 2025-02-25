@@ -67,5 +67,11 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  const subtractionMatch = query.match(/(\d+)\s+minus\s+(\d+)/i);
+  if (subtractionMatch) {
+    const difference = Number(subtractionMatch[1]) - Number(subtractionMatch[2]);
+    return `${difference}`;
+  }
+
   return "";
 }
