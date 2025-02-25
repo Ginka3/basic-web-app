@@ -15,5 +15,18 @@ export default function QueryProcessor(query: string): string {
     return "jjshen";
   }
 
+  const numberMatch = query.match(/(\d+)/g);
+  if (query.toLowerCase().includes("largest") && numberMatch) {
+    const numbers = numberMatch.map(Number);
+    const largest = Math.max(...numbers);
+    return `The largest number is ${largest}.`;
+  }
+
+  const additionMatch = query.match(/(\d+)\s*\+\s*(\d+)/);
+  if (additionMatch) {
+    const sum = Number(additionMatch[1]) + Number(additionMatch[2]);
+    return `The sum is ${sum}.`;
+  }
+
   return "";
 }
