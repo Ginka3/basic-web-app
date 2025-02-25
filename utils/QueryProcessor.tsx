@@ -22,6 +22,17 @@ export default function QueryProcessor(query: string): string {
     return `${largest}`;
   }
 
+  const multiAdditionMatch = query.match(/(\d+)\s+plus\s+(\d+)(?:\s+plus\s+(\d+))?/i);
+  if (multiAdditionMatch) {
+    const sum = multiAdditionMatch
+      .slice(1)
+      .filter(n => n)
+      .map(Number)
+      .reduce((acc, num) => acc + num, 0);
+      
+    return `${sum}`;
+  }
+
   const additionMatch = query.match(/(\d+)\s+plus\s+(\d+)/i);
   if (additionMatch) {
     const sum = Number(additionMatch[1]) + Number(additionMatch[2]);
@@ -73,12 +84,22 @@ export default function QueryProcessor(query: string): string {
     return `${difference}`;
   }
 
-  const multiAdditionMatch = query.match(/(\d+)(?:\s+plus\s+(\d+))+/i);
-  if (multiAdditionMatch) {
-    const numbers = query.match(/\d+/g)?.map(Number) || [];
-    const sum = numbers.reduce((acc, num) => acc + num, 0);
-    return `${sum}`;
+
+  // Handle exponentiation queries with "to the power of"
+  const exponentiationMatch = query.match(/(\d+)\s+to\s+the\s+power\s+of\s+(\d+)/i);
+  if (exponentiationMatch) {
+    const base = BigInt(exponentiationMatch[1]);
+    const exponent = BigInt(exponentiationMatch[2]);
+
+    // Compute power manually for large numbers using a loop-based approach
+    let result = BigInt(1);
+    for (let i = BigInt(0); i < exponent; i++) {
+      result *= base;
+    }
+
+    return result.toString(); // Convert BigInt result to string for safe output
   }
+
 
   return "";
 }
