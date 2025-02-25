@@ -37,16 +37,13 @@ export default function QueryProcessor(query: string): string {
   if (query.toLowerCase().includes("both a square and a cube")) {
     if (numberMatch) {
       const numbers = numberMatch.map(Number);
-      const sixthPowers = numbers.filter(num => {
+      for (const num of numbers) {
         const root = Math.round(Math.pow(num, 1 / 6));
-        return Math.pow(root, 6) === num;
-      });
-
-      if (sixthPowers.length > 0) {
-        return `${sixthPowers.join(" and ")}`;
-      } else {
-        return "None of the given numbers are both squares and cubes.";
+        if (Math.pow(root, 6) === num) {
+          return `${num}`;
+        }
       }
+      return "None of the given numbers are both squares and cubes.";
     }
   }
 
