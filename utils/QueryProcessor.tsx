@@ -28,5 +28,27 @@ export default function QueryProcessor(query: string): string {
     return `${sum}`;
   }
 
+  const multiplicationMatch = query.match(/(\d+)\s+multiplied\s+by\s+(\d+)/i);
+  if (multiplicationMatch) {
+    const product = Number(multiplicationMatch[1]) * Number(multiplicationMatch[2]);
+    return `${product}`;
+  }
+
+  if (query.toLowerCase().includes("both a square and a cube")) {
+    if (numberMatch) {
+      const numbers = numberMatch.map(Number);
+      const sixthPowers = numbers.filter(num => {
+        const root = Math.round(Math.pow(num, 1 / 6));
+        return Math.pow(root, 6) === num;
+      });
+
+      if (sixthPowers.length > 0) {
+        return `${sixthPowers.join(", ")}`;
+      } else {
+        return "None of the given numbers are both squares and cubes.";
+      }
+    }
+  }
+
   return "";
 }
