@@ -73,5 +73,12 @@ export default function QueryProcessor(query: string): string {
     return `${difference}`;
   }
 
+  const multiAdditionMatch = query.match(/(\d+)(?:\s+plus\s+(\d+))+/i);
+  if (multiAdditionMatch) {
+    const numbers = query.match(/\d+/g)?.map(Number) || [];
+    const sum = numbers.reduce((acc, num) => acc + num, 0);
+    return `${sum}`;
+  }
+
   return "";
 }
