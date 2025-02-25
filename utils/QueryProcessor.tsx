@@ -19,13 +19,13 @@ export default function QueryProcessor(query: string): string {
   if (query.toLowerCase().includes("largest") && numberMatch) {
     const numbers = numberMatch.map(Number);
     const largest = Math.max(...numbers);
-    return `The largest number is ${largest}.`;
+    return `${largest}`;
   }
 
-  const additionMatch = query.match(/(\d+)\s*\+\s*(\d+)/);
+  const additionMatch = query.match(/(\d+)\s+plus\s+(\d+)/i);
   if (additionMatch) {
     const sum = Number(additionMatch[1]) + Number(additionMatch[2]);
-    return `The sum is ${sum}.`;
+    return `${sum}`;
   }
 
   return "";
