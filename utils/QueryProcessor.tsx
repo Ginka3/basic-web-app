@@ -43,7 +43,7 @@ export default function QueryProcessor(query: string): string {
       });
 
       if (sixthPowers.length > 0) {
-        return `${sixthPowers.join(", ")}`;
+        return `${sixthPowers.join(" and ")}`;
       } else {
         return "None of the given numbers are both squares and cubes.";
       }
